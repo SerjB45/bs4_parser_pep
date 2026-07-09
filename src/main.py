@@ -122,15 +122,13 @@ def pep(session):
                 r'<dt[^>]*>\s*Status\s*.*?</dt>\s*<dd[^>]*>(.*?)</dd>',
                 str(status_tag)
             )
+
+            status_in_page = 'Unknown'
             if block_match:
                 dd_content = block_match.group(1)
                 text_match = re.search(r'>([^<]+)<', dd_content)
                 if text_match:
                     status_in_page = text_match.group(1).strip()
-                else:
-                    status_in_page = 'Unknown'
-            else:
-                status_in_page = 'Unknown'
 
             if status_in_page not in EXPECTED_STATUS.get(status, ()):
                 logging.warning(
