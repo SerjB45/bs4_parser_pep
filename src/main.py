@@ -133,7 +133,6 @@ def pep(session):
                     status_in_page = text_match.group(1).strip()
 
             if status_in_page not in EXPECTED_STATUS.get(status, ()):
-                breakpoint()
                 msg_log.append(
                     f'Неожиданный статус PEP {url_pep_page}: {status_in_page}'
                 )
