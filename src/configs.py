@@ -2,11 +2,8 @@ import argparse
 import logging
 from logging.handlers import RotatingFileHandler
 
-from constants import BASE_DIR, DATETIME_FORMAT_LOG, LOG_FORMAT
-
-
-MAX_BYTES = 10 ** 6
-BACKUP_COUNT = 5
+from constants import (BACKUP_COUNT, BASE_DIR, DATETIME_FORMAT_LOG, LOG_FORMAT,
+                       MAX_BYTES)
 
 
 def configure_argument_parser(available_modes):

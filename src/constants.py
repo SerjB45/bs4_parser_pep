@@ -7,12 +7,14 @@ LOG_FORMAT = '"%(asctime)s - [%(levelname)s] - %(message)s"'
 DATETIME_FORMAT_LOG = '%d.%m.%Y %H:%M:%S'
 PEPS_DOC_URL = 'https://peps.python.org/'
 EXPECTED_STATUS = {
-     'A': ('Active', 'Accepted'),
-     'D': ('Deferred',),
-     'F': ('Final',),
-     'P': ('Provisional',),
-     'R': ('Rejected',),
-     'S': ('Superseded',),
-     'W': ('Withdrawn',),
-     '': ('Draft', 'Active'),
- }
+    'A': ('Active', 'Accepted'),
+    'D': ('Deferred',),
+    'F': ('Final',),
+    'P': ('Provisional',),
+    'R': ('Rejected',),
+    'S': ('Superseded',),
+    'W': ('Withdrawn',),
+    '': ('Draft', 'Active'),
+}
+MAX_BYTES = 10 ** 6
+BACKUP_COUNT = 5
