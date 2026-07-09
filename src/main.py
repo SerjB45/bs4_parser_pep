@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 import requests_cache
 from tqdm import tqdm
 
+from exceptions import ParserFindTextException
 from configs import configure_argument_parser, configure_logging
 from constants import BASE_DIR, EXPECTED_STATUS, MAIN_DOC_URL, PEPS_DOC_URL
 from outputs import control_output
@@ -50,7 +51,7 @@ def latest_versions(session):
             a_tags = ul.find_all('a')
             break
     else:
-        raise Exception('Не найден список c версиями Python')
+        raise ParserFindTextException('Не найден список c версиями Python')
 
     results = [('Ссылка на документацию', 'Версия', 'Статус')]
     pattern = r'Python (?P<version>\d\.\d+) \((?P<status>.*)\)'
@@ -108,6 +109,7 @@ def pep(session):
 
     status_summary = {}
     total = 0
+    msg_log = []
     for tbody in tqdm(tbodies):
         tr_tags = tbody.find_all('tr')
         for tr_tag in tr_tags:
@@ -131,17 +133,20 @@ def pep(session):
                     status_in_page = text_match.group(1).strip()
 
             if status_in_page not in EXPECTED_STATUS.get(status, ()):
-                logging.warning(
+                breakpoint()
+                msg_log.append(
                     f'Неожиданный статус PEP {url_pep_page}: {status_in_page}'
                 )
-            status_summary[status] = status_summary.get(status, 0) + 1
+
+            status_summary[status_in_page] = status_summary.get(
+                status_in_page, 0) + 1
+    for msg in msg_log:
+        logging.warning(msg)
 
     results = [('Статус', 'Количество')]
-
-    for status, count in status_summary.items():
-        results.append((status, count))
-
+    results.extend(tuple(status_summary.items()))
     results.append(('Total', total))
+
     return results
 
 
